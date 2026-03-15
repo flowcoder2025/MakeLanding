@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+# commit-msg hook: WI-NNN-[type] 형식 강제
+
+commit_msg=$(cat "$1")
+
+# WI-NNN-[type] 또는 WI-chore / WI-docs 시스템 커밋 허용
+if ! echo "$commit_msg" | grep -qP '^WI-(\d{3}-(feat|fix|docs|style|refactor|test|chore|perf|ci|revert)|(chore|docs))\s'; then
+  echo ""
+  echo "ERROR: 커밋 메시지 형식이 올바르지 않습니다."
+  echo ""
+  echo "  허용 형식:"
+  echo "    WI-NNN-[type] 한글 작업명  (예: WI-001-feat 사용자 인증 추가)"
+  echo "    WI-chore 설명              (예: WI-chore 프로젝트 초기 환경 셋업)"
+  echo "    WI-docs 설명               (예: WI-docs README 업데이트)"
+  echo ""
+  echo "  허용 타입: feat, fix, docs, style, refactor, test, chore, perf, ci, revert"
+  echo ""
+  exit 1
+fi

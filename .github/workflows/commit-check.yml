@@ -1,0 +1,38 @@
+name: Commit Message Check
+
+on:
+  pull_request:
+    branches: [main]
+
+jobs:
+  check-commits:
+    name: check-commits
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Validate commit messages
+        run: |
+          base="${{ github.event.pull_request.base.sha }}"
+          head="${{ github.event.pull_request.head.sha }}"
+
+          invalid=0
+          while IFS= read -r msg; do
+            if ! echo "$msg" | grep -qP '^WI-(\d{3}-(feat|fix|docs|style|refactor|test|chore|perf|ci|revert)|(chore|docs))\s'; then
+              echo "::error::Invalid commit message: $msg"
+              invalid=$((invalid + 1))
+            fi
+          done < <(git log --format='%s' "$base".."$head")
+
+          if [ "$invalid" -gt 0 ]; then
+            echo ""
+            echo "Commit message must match: WI-NNN-[type] description"
+            echo "  or system commits: WI-chore / WI-docs"
+            echo ""
+            echo "Allowed types: feat, fix, docs, style, refactor, test, chore, perf, ci, revert"
+            exit 1
+          fi
+
+          echo "All commit messages are valid."
