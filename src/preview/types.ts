@@ -24,3 +24,28 @@ export interface PreviewDeps {
   openBrowser: (url: string) => Promise<void>;
   waitForServer: (url: string, timeoutMs: number) => Promise<void>;
 }
+
+export interface ExportConfig {
+  outputDir: string;
+  projectName: string;
+  pageContent: string;
+  layoutContent: string;
+  globalCss: string;
+  tailwindConfig: TailwindExportConfig;
+  videoAssets?: VideoAsset[];
+}
+
+export interface TailwindExportConfig {
+  brandColor: string;
+  fontFamily: string;
+}
+
+export interface VideoAsset {
+  sourcePath: string;
+  fileName: string;
+}
+
+export interface ExportResult {
+  outputDir: string;
+  filesWritten: string[];
+}
