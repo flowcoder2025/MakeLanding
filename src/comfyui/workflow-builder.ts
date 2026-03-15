@@ -3,8 +3,9 @@ import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import type { VideoStyle, WorkflowInput, ComfyUIWorkflow } from './workflow-types.js';
 import {
-  DEFAULT_VIDEO_WIDTH,
-  DEFAULT_VIDEO_HEIGHT,
+  DEFAULT_GEN_WIDTH,
+  DEFAULT_GEN_HEIGHT,
+  DEFAULT_GEN_FPS,
   DEFAULT_VIDEO_DURATION_SEC,
 } from '../shared/constants.js';
 
@@ -42,12 +43,12 @@ function loadTemplate(style: VideoStyle): string {
 }
 
 function applyParameters(template: string, input: WorkflowInput): ComfyUIWorkflow {
-  const width = input.width ?? DEFAULT_VIDEO_WIDTH;
-  const height = input.height ?? DEFAULT_VIDEO_HEIGHT;
+  const width = input.width ?? DEFAULT_GEN_WIDTH;
+  const height = input.height ?? DEFAULT_GEN_HEIGHT;
   const durationSec = input.durationSec ?? DEFAULT_VIDEO_DURATION_SEC;
   const seed = input.seed ?? Math.floor(Math.random() * 2_147_483_647);
   const negativePrompt = input.negativePrompt ?? DEFAULT_NEGATIVE_PROMPT;
-  const numFrames = durationSec * 24;
+  const numFrames = durationSec * DEFAULT_GEN_FPS;
 
   let result = template;
   result = replaceAll(result, '{{prompt}}', input.prompt);

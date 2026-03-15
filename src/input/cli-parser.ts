@@ -3,14 +3,21 @@ import { loadConfigFile } from './config-loader.js';
 import { validateInput } from './validator.js';
 import type { LandingPageInput } from '../shared/types.js';
 
-export function parseCliArgs(argv: string[]): LandingPageInput {
+export interface CliParseResult {
+  input: LandingPageInput;
+  outputDir: string;
+  skipVideo: boolean;
+  skipPreview: boolean;
+}
+
+export function parseCliArgs(argv: string[]): CliParseResult {
   const program = new Command();
 
   program
     .name('makelanding')
     .description('AI 비디오 배경 프리미엄 랜딩 페이지 자동 생성 도구');
 
-  let parsedInput: LandingPageInput | undefined;
+  let result: CliParseResult | undefined;
 
   program
     .command('generate')
@@ -20,6 +27,9 @@ export function parseCliArgs(argv: string[]): LandingPageInput {
     .option('--industry <industry>', '업종')
     .option('--core-message <message>', '핵심 메시지')
     .option('--target-audience <audience>', '타겟 고객')
+    .option('-o, --output <dir>', '출력 디렉토리', 'out')
+    .option('--skip-video', '비디오 생성 건너뛰기')
+    .option('--skip-preview', '프리뷰 서버 실행 건너뛰기')
     .action((opts) => {
       let base: Partial<LandingPageInput> = {};
 
@@ -35,14 +45,20 @@ export function parseCliArgs(argv: string[]): LandingPageInput {
       };
 
       validateInput(input);
-      parsedInput = input;
+
+      result = {
+        input,
+        outputDir: opts.output ?? 'out',
+        skipVideo: opts.skipVideo ?? false,
+        skipPreview: opts.skipPreview ?? false,
+      };
     });
 
   program.parse(argv);
 
-  if (!parsedInput) {
+  if (!result) {
     throw new Error('generate 명령을 사용해주세요. 예: makelanding generate --config input.json');
   }
 
-  return parsedInput;
+  return result;
 }

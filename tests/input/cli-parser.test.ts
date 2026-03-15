@@ -34,7 +34,10 @@ describe('parseCliArgs', () => {
       configPath,
     ]);
 
-    expect(result).toEqual(config);
+    expect(result.input).toEqual(config);
+    expect(result.outputDir).toBe('out');
+    expect(result.skipVideo).toBe(false);
+    expect(result.skipPreview).toBe(false);
   });
 
   it('개별 CLI 옵션으로 입력을 받는다', () => {
@@ -52,7 +55,7 @@ describe('parseCliArgs', () => {
       '30-40대 직장인',
     ]);
 
-    expect(result).toEqual({
+    expect(result.input).toEqual({
       businessName: '헬스클럽',
       industry: '피트니스',
       coreMessage: '건강한 삶의 시작',
@@ -80,13 +83,32 @@ describe('parseCliArgs', () => {
       '새이름',
     ]);
 
-    expect(result.businessName).toBe('새이름');
-    expect(result.industry).toBe('원래업종');
+    expect(result.input.businessName).toBe('새이름');
+    expect(result.input.industry).toBe('원래업종');
   });
 
   it('필수 필드가 누락되면 에러를 던진다', () => {
     expect(() =>
       parseCliArgs(['node', 'makelanding', 'generate']),
     ).toThrow();
+  });
+
+  it('--skip-video, --skip-preview, --output 옵션을 지원한다', () => {
+    const result = parseCliArgs([
+      'node',
+      'makelanding',
+      'generate',
+      '--business-name', '테스트',
+      '--industry', 'IT',
+      '--core-message', '테스트',
+      '--target-audience', '개발자',
+      '--skip-video',
+      '--skip-preview',
+      '--output', 'build',
+    ]);
+
+    expect(result.skipVideo).toBe(true);
+    expect(result.skipPreview).toBe(true);
+    expect(result.outputDir).toBe('build');
   });
 });

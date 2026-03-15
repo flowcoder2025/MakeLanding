@@ -4,7 +4,7 @@ export type VideoStyleType = 'realistic' | '3d-product' | '3d-character';
 
 export interface StyleConfig {
   primaryColor: string;
-  secondaryColor: string;
+  accentColor: string;
   backgroundColor: string;
   fontFamily: string;
   videoStyle: VideoStyleType;

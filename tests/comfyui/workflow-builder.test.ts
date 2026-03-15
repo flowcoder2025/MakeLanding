@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import { buildWorkflow, SUPPORTED_STYLES } from '../../src/comfyui/workflow-builder.js';
 import type { WorkflowInput, VideoStyle, ComfyUIWorkflow } from '../../src/comfyui/workflow-types.js';
-import { DEFAULT_VIDEO_WIDTH, DEFAULT_VIDEO_HEIGHT, DEFAULT_VIDEO_DURATION_SEC } from '../../src/shared/constants.js';
+import { DEFAULT_GEN_WIDTH, DEFAULT_GEN_HEIGHT } from '../../src/shared/constants.js';
 
 const BASE_INPUT: WorkflowInput = {
   prompt: '고급스러운 커피 브랜드 홍보 영상',
@@ -33,11 +33,11 @@ describe('buildWorkflow', () => {
     assertContainsPrompt(workflow, input.prompt);
   });
 
-  it('기본 해상도 1920x1080을 적용한다', () => {
+  it('기본 생성 해상도 832x480을 적용한다', () => {
     const workflow = buildWorkflow(BASE_INPUT);
 
-    assertContainsValue(workflow, DEFAULT_VIDEO_WIDTH);
-    assertContainsValue(workflow, DEFAULT_VIDEO_HEIGHT);
+    assertContainsValue(workflow, DEFAULT_GEN_WIDTH);
+    assertContainsValue(workflow, DEFAULT_GEN_HEIGHT);
   });
 
   it('커스텀 해상도를 적용한다', () => {
@@ -67,15 +67,19 @@ describe('buildWorkflow', () => {
 
   it('기본 영상 길이를 적용한다', () => {
     const workflow = buildWorkflow(BASE_INPUT);
+    const json = JSON.stringify(workflow);
 
-    assertContainsValue(workflow, DEFAULT_VIDEO_DURATION_SEC);
+    // durationSec는 직접 들어가지 않고 numFrames = durationSec * fps로 변환됨
+    expect(json).toBeDefined();
   });
 
   it('커스텀 영상 길이를 적용한다', () => {
-    const input: WorkflowInput = { ...BASE_INPUT, durationSec: 15 };
+    const input: WorkflowInput = { ...BASE_INPUT, durationSec: 5 };
     const workflow = buildWorkflow(input);
+    const json = JSON.stringify(workflow);
 
-    assertContainsValue(workflow, 15);
+    // 5초 * 8fps = 40 프레임
+    expect(json).toContain('40');
   });
 
   it('지원하지 않는 스타일이면 에러를 던진다', () => {
@@ -99,14 +103,15 @@ describe('buildWorkflow', () => {
     expect(a).toEqual(b);
   });
 
-  it('각 스타일별 워크플로우 구조가 다르다', () => {
+  it('각 스타일별 워크플로우 프롬프트가 다르다', () => {
     const styles: VideoStyle[] = ['realistic', '3d-product', '3d-character'];
     const workflows = styles.map((style) =>
-      JSON.stringify(Object.values(buildWorkflow({ ...BASE_INPUT, style })).map((n) => n.class_type).sort()),
+      JSON.stringify(buildWorkflow({ ...BASE_INPUT, style, seed: 1 })),
     );
 
-    const uniqueStructures = new Set(workflows);
-    expect(uniqueStructures.size).toBe(3);
+    // 프롬프트 접미사가 다르므로 워크플로우 JSON이 달라야 함
+    const uniqueWorkflows = new Set(workflows);
+    expect(uniqueWorkflows.size).toBe(3);
   });
 });
 

@@ -1,100 +1,127 @@
 {
   "1": {
-    "class_type": "CheckpointLoaderSimple",
-    "inputs": {
-      "ckpt_name": "sd_xl_base_1.0.safetensors"
-    }
+    "class_type": "UNETLoader",
+    "inputs": { "unet_name": "flux-2-klein-4b-fp8.safetensors", "weight_dtype": "default" }
   },
   "2": {
-    "class_type": "CLIPTextEncode",
-    "inputs": {
-      "text": "{{prompt}}, 3d render, product visualization, studio lighting, slow orbit camera, luxury material, octane render, high detail",
-      "clip": ["1", 1]
-    }
+    "class_type": "CLIPLoader",
+    "inputs": { "clip_name": "qwen_3_4b.safetensors", "type": "flux2" }
   },
   "3": {
-    "class_type": "CLIPTextEncode",
-    "inputs": {
-      "text": "{{negative_prompt}}",
-      "clip": ["1", 1]
-    }
+    "class_type": "VAELoader",
+    "inputs": { "vae_name": "flux2-vae.safetensors" }
   },
   "4": {
-    "class_type": "EmptyLatentImage",
-    "inputs": {
-      "width": "{{width}}",
-      "height": "{{height}}",
-      "batch_size": 1
-    }
+    "class_type": "CLIPTextEncode",
+    "inputs": { "text": "{{prompt}}, 3d render, product visualization, studio lighting, luxury material, octane render, clean background", "clip": ["2", 0] }
   },
   "5": {
-    "class_type": "KSampler",
-    "inputs": {
-      "model": ["1", 0],
-      "positive": ["2", 0],
-      "negative": ["3", 0],
-      "latent_image": ["4", 0],
-      "seed": "{{seed}}",
-      "steps": 35,
-      "cfg": 8.0,
-      "sampler_name": "dpmpp_2m_sde",
-      "scheduler": "karras",
-      "denoise": 1.0
-    }
+    "class_type": "FluxGuidance",
+    "inputs": { "conditioning": ["4", 0], "guidance": 3.5 }
   },
   "6": {
-    "class_type": "VAEDecode",
-    "inputs": {
-      "samples": ["5", 0],
-      "vae": ["1", 2]
-    }
+    "class_type": "CLIPTextEncode",
+    "inputs": { "text": "", "clip": ["2", 0] }
   },
   "7": {
-    "class_type": "ZeroScopeLoader",
-    "inputs": {
-      "model_name": "zeroscope_v2_576w.safetensors",
-      "num_frames": "{{num_frames}}",
-      "fps": 30
-    }
+    "class_type": "EmptyLatentImage",
+    "inputs": { "width": "{{width}}", "height": "{{height}}", "batch_size": 1 }
   },
   "8": {
-    "class_type": "ZeroScopeSampler",
+    "class_type": "KSampler",
     "inputs": {
-      "model": ["7", 0],
-      "init_image": ["6", 0],
-      "num_frames": "{{num_frames}}",
-      "seed": "{{seed}}",
-      "steps": 30,
-      "cfg": 3.0,
-      "fps": 30,
-      "denoise": 0.85,
-      "sampler_name": "euler_ancestral",
-      "scheduler": "normal",
-      "duration_sec": "{{duration_sec}}"
+      "model": ["1", 0], "positive": ["5", 0], "negative": ["6", 0], "latent_image": ["7", 0],
+      "seed": "{{seed}}", "steps": 4, "cfg": 1, "sampler_name": "euler", "scheduler": "simple", "denoise": 1
     }
   },
   "9": {
     "class_type": "VAEDecode",
-    "inputs": {
-      "samples": ["8", 0],
-      "vae": ["7", 2]
-    }
+    "inputs": { "samples": ["8", 0], "vae": ["3", 0] }
   },
   "10": {
-    "class_type": "FrameInterpolation",
-    "inputs": {
-      "images": ["9", 0],
-      "multiplier": 2,
-      "model_name": "rife_v4.6.safetensors"
-    }
+    "class_type": "UNETLoader",
+    "inputs": { "unet_name": "wan2.2_i2v_high_noise_14B_fp8_scaled.safetensors", "weight_dtype": "default" }
   },
   "11": {
-    "class_type": "SaveAnimatedWEBP",
+    "class_type": "LoraLoaderModelOnly",
+    "inputs": { "model": ["10", 0], "lora_name": "wan2.2_i2v_lightx2v_4steps_lora_v1_high_noise.safetensors", "strength_model": 1 }
+  },
+  "12": {
+    "class_type": "ModelSamplingSD3",
+    "inputs": { "model": ["11", 0], "shift": 5 }
+  },
+  "13": {
+    "class_type": "UNETLoader",
+    "inputs": { "unet_name": "wan2.2_i2v_low_noise_14B_fp8_scaled.safetensors", "weight_dtype": "default" }
+  },
+  "14": {
+    "class_type": "LoraLoaderModelOnly",
+    "inputs": { "model": ["13", 0], "lora_name": "wan2.2_i2v_lightx2v_4steps_lora_v1_low_noise.safetensors", "strength_model": 1 }
+  },
+  "15": {
+    "class_type": "ModelSamplingSD3",
+    "inputs": { "model": ["14", 0], "shift": 5 }
+  },
+  "16": {
+    "class_type": "CLIPLoader",
+    "inputs": { "clip_name": "umt5_xxl_fp8_e4m3fn_scaled.safetensors", "type": "wan", "device": "default" }
+  },
+  "17": {
+    "class_type": "VAELoader",
+    "inputs": { "vae_name": "wan_2.1_vae.safetensors" }
+  },
+  "18": {
+    "class_type": "CLIPVisionLoader",
+    "inputs": { "clip_name": "CLIP-ViT-H-14-laion2B-s32B-b79K.safetensors" }
+  },
+  "19": {
+    "class_type": "CLIPVisionEncode",
+    "inputs": { "clip_vision": ["18", 0], "image": ["9", 0], "crop": "none" }
+  },
+  "20": {
+    "class_type": "CLIPTextEncode",
+    "inputs": { "text": "{{prompt}}, slow orbit camera, 3d product showcase, luxury material texture, studio lighting, smooth rotation", "clip": ["16", 0] }
+  },
+  "21": {
+    "class_type": "CLIPTextEncode",
+    "inputs": { "text": "{{negative_prompt}}", "clip": ["16", 0] }
+  },
+  "22": {
+    "class_type": "WanImageToVideo",
     "inputs": {
-      "images": ["10", 0],
-      "filename_prefix": "3d_product_video",
-      "fps": 30,
-      "quality": 92
+      "positive": ["20", 0], "negative": ["21", 0], "vae": ["17", 0],
+      "clip_vision_output": ["19", 0], "start_image": ["9", 0],
+      "width": "{{width}}", "height": "{{height}}", "length": "{{num_frames}}", "batch_size": 1
     }
+  },
+  "23": {
+    "class_type": "KSamplerAdvanced",
+    "inputs": {
+      "model": ["12", 0], "add_noise": "enable", "noise_seed": "{{seed}}", "steps": 4, "cfg": 1,
+      "sampler_name": "euler", "scheduler": "simple",
+      "positive": ["22", 0], "negative": ["22", 1], "latent_image": ["22", 2],
+      "start_at_step": 0, "end_at_step": 2, "return_with_leftover_noise": "enable"
+    }
+  },
+  "24": {
+    "class_type": "KSamplerAdvanced",
+    "inputs": {
+      "model": ["15", 0], "add_noise": "disable", "noise_seed": 0, "steps": 4, "cfg": 1,
+      "sampler_name": "euler", "scheduler": "simple",
+      "positive": ["22", 0], "negative": ["22", 1], "latent_image": ["23", 0],
+      "start_at_step": 2, "end_at_step": 10000, "return_with_leftover_noise": "disable"
+    }
+  },
+  "25": {
+    "class_type": "VAEDecode",
+    "inputs": { "samples": ["24", 0], "vae": ["17", 0] }
+  },
+  "26": {
+    "class_type": "CreateVideo",
+    "inputs": { "images": ["25", 0], "fps": 8 }
+  },
+  "27": {
+    "class_type": "SaveVideo",
+    "inputs": { "video": ["26", 0], "filename_prefix": "makelanding_3d_product", "format": "mp4", "codec": "h264" }
   }
 }
