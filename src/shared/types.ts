@@ -13,3 +13,20 @@ export interface CopyResult {
   ctaSecondary: string;
   navItems: string[];
 }
+
+export type VideoStyleType = 'realistic' | '3d-product' | '3d-character';
+
+export type FontStyle = 'modern' | 'classic' | 'bold' | 'elegant' | 'playful';
+
+export interface ColorPalette {
+  primary: string;
+  accent: string;
+  background: string;
+  text: string;
+}
+
+export interface BrandStyle {
+  colorPalette: ColorPalette;
+  fontStyle: FontStyle;
+  videoType: VideoStyleType;
+}
