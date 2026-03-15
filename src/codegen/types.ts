@@ -16,3 +16,10 @@ export interface VideoHeroConfig {
   videoWebmSrc: string;
   posterSrc: string;
 }
+
+export interface NavbarConfig {
+  businessName: string;
+  navItems: string[];
+  ctaText: string;
+  brandColor: string;
+}
