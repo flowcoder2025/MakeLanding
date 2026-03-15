@@ -1,14 +1,14 @@
 # Fix Plan
 
 ## L1: 입력 & AI 기획
-- [ ] WI-001-feat CLI 입력 모듈 구현 | L1:Input > L2:입력 | batch:A
-- [ ] WI-002-feat AI 카피 생성 모듈 구현 | L1:Input > L2:카피 | batch:B
-- [ ] WI-003-feat 브랜드 스타일 자동 결정 | L1:Input > L2:스타일 | batch:C
+- [x] WI-001-feat CLI 입력 모듈 구현 | L1:Input > L2:입력 | batch:A
+- [x] WI-002-feat AI 카피 생성 모듈 구현 | L1:Input > L2:카피 | batch:B
+- [x] WI-003-feat 브랜드 스타일 자동 결정 | L1:Input > L2:스타일 | batch:C
 
 ## L1: 비주얼 생성 (ComfyUI)
-- [ ] WI-004-feat ComfyUI API 클라이언트 구현 | L1:ComfyUI > L2:API | batch:A
-- [ ] WI-005-feat 비디오 생성 워크플로우 템플릿 | L1:ComfyUI > L2:워크플로우 | batch:B
-- [ ] WI-006-feat 비디오 후처리 파이프라인 | L1:ComfyUI > L2:후처리 | batch:C
+- [x] WI-004-feat ComfyUI API 클라이언트 구현 | L1:ComfyUI > L2:API | batch:A
+- [x] WI-005-feat 비디오 생성 워크플로우 템플릿 | L1:ComfyUI > L2:워크플로우 | batch:B
+- [x] WI-006-feat 비디오 후처리 파이프라인 | L1:ComfyUI > L2:후처리 | batch:C
 
 ## L1: 코드 생성
 - [ ] WI-007-feat 비디오 히어로 섹션 컴포넌트 | L1:Codegen > L2:컴포넌트 | batch:A
