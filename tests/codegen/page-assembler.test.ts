@@ -30,18 +30,30 @@ const SAMPLE_STYLE: StyleConfig = {
   videoStyle: 'realistic',
 };
 
-const SAMPLE_VIDEO: VideoAssets = {
-  mp4Path: '/path/to/hero-bg.mp4',
-  webmPath: '/path/to/hero-bg.webm',
-  posterPath: '/path/to/hero-poster.jpg',
-};
+let videoTmpDir: string;
+const getSampleVideo = (): VideoAssets => ({
+  mp4Path: join(videoTmpDir, 'hero-bg.mp4'),
+  webmPath: join(videoTmpDir, 'hero-bg.webm'),
+  posterPath: join(videoTmpDir, 'hero-poster.jpg'),
+});
 
-const SAMPLE_INPUT: PageAssemblerInput = {
-  projectName: 'test-landing',
-  copy: SAMPLE_COPY,
-  style: SAMPLE_STYLE,
-  video: SAMPLE_VIDEO,
-};
+let SAMPLE_VIDEO: VideoAssets;
+let SAMPLE_INPUT: PageAssemblerInput;
+
+beforeEach(() => {
+  videoTmpDir = mkdtempSync(join(tmpdir(), 'makelanding-video-'));
+  SAMPLE_VIDEO = getSampleVideo();
+  SAMPLE_INPUT = {
+    projectName: 'test-landing',
+    copy: SAMPLE_COPY,
+    style: SAMPLE_STYLE,
+    video: SAMPLE_VIDEO,
+  };
+});
+
+afterEach(() => {
+  try { rmSync(videoTmpDir, { recursive: true, force: true }); } catch { /* ignore */ }
+});
 
 describe('generatePageCode', () => {
   it('헤드라인과 서브카피가 포함된 페이지 코드를 생성한다', () => {
@@ -215,7 +227,6 @@ describe('assembleProject', () => {
       'utf-8',
     );
 
-    mkdirSync(join(SAMPLE_VIDEO.mp4Path, '..'), { recursive: true });
     writeFileSync(SAMPLE_VIDEO.mp4Path, 'fake-mp4', 'utf-8');
     writeFileSync(SAMPLE_VIDEO.webmPath, 'fake-webm', 'utf-8');
     writeFileSync(SAMPLE_VIDEO.posterPath, 'fake-poster', 'utf-8');
@@ -224,11 +235,6 @@ describe('assembleProject', () => {
   afterEach(() => {
     rmSync(outputDir, { recursive: true, force: true });
     rmSync(templatesDir, { recursive: true, force: true });
-    try {
-      rmSync(join(SAMPLE_VIDEO.mp4Path, '..'), { recursive: true, force: true });
-    } catch {
-      // ignore
-    }
   });
 
   it('출력 디렉토리에 Next.js 프로젝트를 생성한다', async () => {
