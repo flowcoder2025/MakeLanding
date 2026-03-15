@@ -210,3 +210,21 @@ export function resolveStyle(input: LandingPageInput): BrandStyle {
     videoType: profile.videoType,
   };
 }
+
+const FONT_FAMILY_MAP: Record<FontStyle, string> = {
+  modern: 'Pretendard',
+  classic: 'Noto Serif KR',
+  bold: 'Black Han Sans',
+  elegant: 'Cormorant Garamond',
+  playful: 'Jua',
+};
+
+export function toStyleConfig(brand: BrandStyle): import('../codegen/types.js').StyleConfig {
+  return {
+    primaryColor: brand.colorPalette.primary,
+    accentColor: brand.colorPalette.accent,
+    backgroundColor: brand.colorPalette.background,
+    fontFamily: FONT_FAMILY_MAP[brand.fontStyle],
+    videoStyle: brand.videoType,
+  };
+}

@@ -50,5 +50,5 @@ export interface PageAssemblerInput {
   projectName: string;
   copy: import('../shared/types.js').CopyResult;
   style: StyleConfig;
-  video: VideoAssets;
+  video: VideoAssets | null;
 }

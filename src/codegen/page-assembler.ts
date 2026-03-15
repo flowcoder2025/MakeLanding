@@ -6,7 +6,7 @@ import type { StyleConfig, VideoAssets, PageAssemblerInput } from './types.js';
 export function generatePageCode(
   copy: CopyResult,
   style: StyleConfig,
-  video: VideoAssets,
+  video: VideoAssets | null,
 ): string {
   const navItemsList = copy.navItems
     .map((item) => `    '${item}',`)
@@ -33,9 +33,9 @@ ${copy.headline.map((line) => `          '${line}',`).join('\n')}
         subCopy="${copy.subCopy}"
         ctaPrimary="${copy.ctaPrimary}"
         ctaSecondary="${copy.ctaSecondary}"
-        videoSrc="/videos/${basename(video.mp4Path)}"
-        videoWebmSrc="/videos/${basename(video.webmPath)}"
-        posterSrc="/videos/${basename(video.posterPath)}"
+        videoSrc="/videos/${video ? basename(video.mp4Path) : 'hero-bg.mp4'}"
+        videoWebmSrc="/videos/${video ? basename(video.webmPath) : 'hero-bg.webm'}"
+        posterSrc="/videos/${video ? basename(video.posterPath) : 'hero-poster.jpg'}"
       />
     </main>
   );
@@ -208,7 +208,9 @@ export async function assembleProject(
   );
 
   copyTemplateComponents(templatesDir, componentsDir);
-  copyVideoAssets(input.video, videosDir);
+  if (input.video) {
+    copyVideoAssets(input.video, videosDir);
+  }
 
   return projectDir;
 }

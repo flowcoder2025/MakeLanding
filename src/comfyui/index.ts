@@ -9,6 +9,8 @@ export type {
 export { postProcessVideo, getVideoDuration, calculateTargetBitrate } from './video-postprocess.js';
 export type { PostProcessOptions, PostProcessResult } from './video-postprocess.js';
 export { buildWorkflow, SUPPORTED_STYLES } from './workflow-builder.js';
+export { buildVideoPrompt } from './prompt-builder.js';
+export { generateVideo } from './video-generator.js';
 export type {
   VideoStyle,
   WorkflowInput,

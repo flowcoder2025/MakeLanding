@@ -20,7 +20,7 @@ const SAMPLE_COPY: CopyResult = {
 
 const SAMPLE_STYLE: StyleConfig = {
   primaryColor: '#FF6B35',
-  secondaryColor: '#004E98',
+  accentColor: '#004E98',
   backgroundColor: '#0A0A0A',
   fontFamily: 'Pretendard',
   videoStyle: 'realistic',
