@@ -1,3 +1,4 @@
 export { generateCopy } from './copy-generator.js';
 export { createLlmClient } from './llm-client.js';
-export type { LlmConfig, LlmClient } from './types.js';
+export { generateVideoHero } from './video-hero-generator.js';
+export type { LlmConfig, LlmClient, VideoHeroConfig } from './types.js';

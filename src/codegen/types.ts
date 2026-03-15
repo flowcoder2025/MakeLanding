@@ -5,3 +5,14 @@ export interface LlmConfig {
 }
 
 export type LlmClient = (systemPrompt: string, userMessage: string) => Promise<string>;
+
+export interface VideoHeroConfig {
+  headline: string[];
+  subCopy: string;
+  ctaPrimary: string;
+  ctaSecondary: string;
+  brandColor: string;
+  videoSrc: string;
+  videoWebmSrc: string;
+  posterSrc: string;
+}
