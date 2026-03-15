@@ -23,3 +23,11 @@ export interface NavbarConfig {
   ctaText: string;
   brandColor: string;
 }
+
+export interface CtaConfig {
+  primaryText: string;
+  secondaryText: string;
+  brandColor: string;
+  primaryHref: string;
+  secondaryHref: string;
+}
