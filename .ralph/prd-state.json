@@ -1,0 +1,70 @@
+{
+  "step": 5,
+  "project_name": "MakeLanding",
+  "overview": {
+    "name": "MakeLanding",
+    "goal": "주제를 입력하면 ComfyUI로 AI 비디오 배경을 생성하고, Next.js 기반 프리미엄 영상 랜딩 페이지를 자동으로 만들어주는 로컬 도구",
+    "users": "본인 (추후 SaaS 확장 가능)",
+    "criteria": "주제 입력 → AI 카피 생성 → ComfyUI 비디오 생성 → Next.js 영상 랜딩 페이지 출력"
+  },
+  "tech_stack": {
+    "language": "TypeScript",
+    "framework": "Next.js",
+    "visual_engine": "ComfyUI (로컬)",
+    "animation": "GSAP / Framer Motion",
+    "styling": "Tailwind CSS",
+    "reason": "본인 선호 스택 + ComfyUI 로컬 활용 + 텍스트 애니메이션 필요"
+  },
+  "reference_analysis": {
+    "vid1_pilseung_edu": "실사 AI 영상 배경 + 다크 오버레이 + 볼드 헤드라인(흰+빨강) + 고정 네비/CTA",
+    "vid2_nourish": "3D 제품 비주얼 슬로우 카메라 + 골드톤 라이팅 + 좌측 카피 + 프리미엄 느낌",
+    "vid3_autonixlab": "3D 캐릭터 애니메이션 + 낮밤 전환 + 타이핑 효과 + 스토리텔링",
+    "common_patterns": [
+      "AI 생성 풀스크린 비디오 배경",
+      "고정 UI 오버레이 (네비 + 헤드라인 + CTA)",
+      "대형 볼드 한글 타이포그래피 + 강조색",
+      "텍스트 애니메이션 (타이핑, fade-in)",
+      "브랜드 스토리텔링 모션",
+      "시네마틱 카메라 + 프리미엄 조명"
+    ]
+  },
+  "decisions": [
+    {
+      "topic": "서비스 방식",
+      "chosen": "로컬 도구",
+      "rejected": "웹 SaaS / API",
+      "reason": "당장은 본인만 사용, 로컬에서만 동작하면 됨",
+      "turn": 2
+    },
+    {
+      "topic": "출력 형태",
+      "chosen": "Next.js 기반 영상 랜딩 페이지 코드",
+      "rejected": "정적 HTML",
+      "reason": "사용자 선호 스택 + 영상 핸들링 필요",
+      "turn": 2
+    },
+    {
+      "topic": "비주얼 생성",
+      "chosen": "ComfyUI (이미지 + 비디오)",
+      "rejected": null,
+      "reason": "사용자가 이미 ComfyUI 설치됨, 영상 생성 가능",
+      "turn": 1
+    },
+    {
+      "topic": "랜딩 페이지 스타일",
+      "chosen": "AI 비디오 배경 + 고정 UI 오버레이 + 텍스트 애니메이션",
+      "rejected": "정적 이미지 배경",
+      "reason": "3개 레퍼런스 분석 결과 — 모두 풀스크린 비디오 + 고정 오버레이 패턴",
+      "turn": 4
+    }
+  ],
+  "user_constraints": [
+    "로컬에서만 동작하면 됨 (당장 본인만 사용)",
+    "ComfyUI 활용 (이미 설치됨)",
+    "Next.js 스택",
+    "레퍼런스: @heroooo_landing 스타일 — AI 비디오 배경 + 고정 UI + 텍스트 애니메이션"
+  ],
+  "draft_ready": true,
+  "confirmed": true,
+  "updated_at": "2026-03-15T19:30:00"
+}
