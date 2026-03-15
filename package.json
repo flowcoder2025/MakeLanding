@@ -1,0 +1,32 @@
+{
+  "name": "makelanding",
+  "version": "0.1.0",
+  "description": "AI 비디오 배경 프리미엄 랜딩 페이지 자동 생성 도구",
+  "type": "module",
+  "bin": {
+    "makelanding": "./dist/index.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "lint": "eslint src/ tests/",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "start": "node dist/index.js"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "keywords": ["landing-page", "ai", "video", "comfyui"],
+  "license": "MIT",
+  "dependencies": {
+    "commander": "^13.1.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.17.0",
+    "eslint": "^9.20.0",
+    "@eslint/js": "^9.20.0",
+    "typescript-eslint": "^8.25.0",
+    "typescript": "^5.7.0",
+    "vitest": "^3.0.0"
+  }
+}
