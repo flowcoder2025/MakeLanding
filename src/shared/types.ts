@@ -5,3 +5,11 @@ export interface LandingPageInput {
   targetAudience: string;
   language?: string;
 }
+
+export interface CopyResult {
+  headline: string[];
+  subCopy: string;
+  ctaPrimary: string;
+  ctaSecondary: string;
+  navItems: string[];
+}
