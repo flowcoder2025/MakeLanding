@@ -1,1 +1,30 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+
+# Generated landing pages
+out/
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Ralph ref frames
 .ralph/ref-frames/
+.ralph/logs/*.log

@@ -9,5 +9,8 @@ COOLDOWN_SEC=5
 ERROR_COOLDOWN_SEC=30
 NO_PROGRESS_LIMIT=3
 
+# Parallel mode (2 workers)
+PARALLEL_COUNT=2
+
 # Allowed tools for Claude
 ALLOWED_TOOLS="Edit,Write,Read,Bash,Glob,Grep"
