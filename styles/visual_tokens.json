@@ -1,0 +1,57 @@
+{
+  "premium_tech_dark": {
+    "style_tokens": [
+      "dark interface mood",
+      "soft blue glow",
+      "glass reflections",
+      "precise grid",
+      "controlled contrast",
+      "clean negative space"
+    ],
+    "prompt_suffix": "dark moody atmosphere, soft neon glow, glass and metal surfaces, dramatic lighting, premium tech aesthetic"
+  },
+  "consumer_bright_clean": {
+    "style_tokens": [
+      "bright daylight",
+      "soft shadows",
+      "friendly realism",
+      "simple background",
+      "fresh color accents",
+      "minimal clutter"
+    ],
+    "prompt_suffix": "bright natural lighting, clean white background, friendly warm tones, soft shadows, minimal and airy"
+  },
+  "luxury_product": {
+    "style_tokens": [
+      "studio lighting",
+      "rich material detail",
+      "low clutter",
+      "dramatic reflections",
+      "premium texture",
+      "editorial composition"
+    ],
+    "prompt_suffix": "studio product photography, dramatic side lighting, rich textures, editorial still life, premium feel"
+  },
+  "creative_bold": {
+    "style_tokens": [
+      "vibrant colors",
+      "dynamic composition",
+      "expressive",
+      "energetic",
+      "playful geometry",
+      "bold contrast"
+    ],
+    "prompt_suffix": "vibrant bold colors, dynamic angle, energetic composition, creative and expressive, modern pop aesthetic"
+  },
+  "minimal_elegant": {
+    "style_tokens": [
+      "generous whitespace",
+      "subtle tones",
+      "refined typography feel",
+      "calm",
+      "understated luxury",
+      "precise alignment"
+    ],
+    "prompt_suffix": "minimal elegant composition, muted tones, generous whitespace, calm and refined, understated luxury"
+  }
+}

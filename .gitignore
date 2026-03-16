@@ -6,6 +6,7 @@ dist/
 
 # Generated landing pages
 out/
+outputs/
 
 # Environment
 .env
