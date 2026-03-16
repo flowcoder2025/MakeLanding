@@ -1,0 +1,98 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "recipe_id": { "type": "string" },
+    "hero": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "eyebrow": { "type": "string" },
+        "headline": { "type": "string" },
+        "subheadline": { "type": "string" },
+        "primary_cta": { "type": "string" },
+        "secondary_cta": { "type": "string" }
+      },
+      "required": ["headline", "subheadline", "primary_cta"]
+    },
+    "proof_bar": {
+      "type": "array",
+      "items": { "type": "string" },
+      "minItems": 0,
+      "maxItems": 5
+    },
+    "benefits": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "title": { "type": "string" },
+          "body": { "type": "string" }
+        },
+        "required": ["title", "body"]
+      },
+      "minItems": 3,
+      "maxItems": 4
+    },
+    "how_it_works": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "step": { "type": "string" },
+          "title": { "type": "string" },
+          "body": { "type": "string" }
+        },
+        "required": ["title", "body"]
+      },
+      "minItems": 0,
+      "maxItems": 4
+    },
+    "testimonial": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "quote": { "type": "string" },
+        "name": { "type": "string" },
+        "role": { "type": "string" }
+      },
+      "required": ["quote"]
+    },
+    "faq": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "q": { "type": "string" },
+          "a": { "type": "string" }
+        },
+        "required": ["q", "a"]
+      },
+      "minItems": 3,
+      "maxItems": 6
+    },
+    "seo": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "title": { "type": "string" },
+        "description": { "type": "string" }
+      },
+      "required": ["title", "description"]
+    },
+    "visual_brief": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "hero_scene": { "type": "string" },
+        "supporting_scene_1": { "type": "string" },
+        "supporting_scene_2": { "type": "string" }
+      },
+      "required": ["hero_scene"]
+    }
+  },
+  "required": ["recipe_id", "hero", "benefits", "faq", "seo", "visual_brief"]
+}

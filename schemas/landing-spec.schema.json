@@ -1,0 +1,111 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "archetype": {
+      "type": "string",
+      "enum": ["saas", "ai_tool", "ecommerce", "mobile_app", "agency", "creator", "course", "community", "game"]
+    },
+    "channel": {
+      "type": "string",
+      "enum": ["demo_booking", "purchase", "app_install", "waitlist", "seo", "lead_form", "community_signup"]
+    },
+    "audience": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "role": { "type": "string" },
+        "industry": { "type": "string" },
+        "awareness": {
+          "type": "string",
+          "enum": ["unaware", "problem_aware", "solution_aware", "product_aware", "most_aware"]
+        },
+        "pain_points": {
+          "type": "array",
+          "items": { "type": "string" },
+          "minItems": 1,
+          "maxItems": 5
+        }
+      },
+      "required": ["role", "awareness", "pain_points"]
+    },
+    "offer": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "name": { "type": "string" },
+        "category": { "type": "string" },
+        "core_promise": { "type": "string" },
+        "primary_cta_goal": {
+          "type": "string",
+          "enum": ["book_demo", "buy_now", "start_free", "install_app", "join_waitlist", "submit_form"]
+        }
+      },
+      "required": ["name", "core_promise", "primary_cta_goal"]
+    },
+    "proof": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "metrics": {
+          "type": "array",
+          "items": { "type": "string" },
+          "maxItems": 4
+        },
+        "logos": {
+          "type": "array",
+          "items": { "type": "string" },
+          "maxItems": 10
+        },
+        "testimonial_count": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 6
+        }
+      },
+      "required": ["metrics", "logos", "testimonial_count"]
+    },
+    "visual_direction": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "tone": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": ["premium", "playful", "clean", "technical", "bold", "minimal", "luxury", "friendly"]
+          },
+          "minItems": 1,
+          "maxItems": 3
+        },
+        "theme": { "type": "string", "enum": ["light", "dark", "mixed"] },
+        "motion": { "type": "string", "enum": ["none", "subtle", "medium"] },
+        "density": { "type": "string", "enum": ["low", "medium", "high"] }
+      },
+      "required": ["tone", "theme", "motion", "density"]
+    },
+    "constraints": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "locale": { "type": "string" },
+        "device_priority": {
+          "type": "string",
+          "enum": ["mobile_first", "balanced", "desktop_first"]
+        },
+        "must_include": {
+          "type": "array",
+          "items": { "type": "string" },
+          "maxItems": 8
+        },
+        "avoid": {
+          "type": "array",
+          "items": { "type": "string" },
+          "maxItems": 8
+        }
+      },
+      "required": ["locale", "device_priority", "must_include", "avoid"]
+    }
+  },
+  "required": ["archetype", "channel", "audience", "offer", "proof", "visual_direction", "constraints"]
+}

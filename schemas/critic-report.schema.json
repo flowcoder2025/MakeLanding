@@ -1,0 +1,42 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "overall_score": { "type": "integer", "minimum": 0, "maximum": 100 },
+    "top_strengths": {
+      "type": "array",
+      "items": { "type": "string" },
+      "maxItems": 5
+    },
+    "top_issues": {
+      "type": "array",
+      "items": { "type": "string" },
+      "maxItems": 5
+    },
+    "keep": {
+      "type": "array",
+      "items": { "type": "string" },
+      "maxItems": 8
+    },
+    "patches": {
+      "type": "array",
+      "maxItems": 8,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "priority": { "type": "string", "enum": ["high", "medium", "low"] },
+          "target": {
+            "type": "string",
+            "enum": ["hero", "proof", "benefits", "faq", "cta", "visual", "layout", "mobile"]
+          },
+          "issue": { "type": "string" },
+          "action": { "type": "string" },
+          "reason": { "type": "string" }
+        },
+        "required": ["priority", "target", "issue", "action", "reason"]
+      }
+    }
+  },
+  "required": ["overall_score", "top_strengths", "top_issues", "keep", "patches"]
+}
